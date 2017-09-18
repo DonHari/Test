@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.stas.IsoToUtfTest</groupId>
-    <artifactId>IsoToUtfTest</artifactId>
+    <groupId>com.stas.toUtfTest</groupId>
+    <artifactId>toUtfTest</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <build>
-        <finalName>IsoToUtfTest</finalName>
+        <finalName>toUtfTest</finalName>
     </build>
 
     <dependencies>
@@ -19,5 +19,11 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
     </dependencies>
 </project>

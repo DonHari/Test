@@ -6,87 +6,65 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
-/**
- * Created by Стас on 08.09.2017.
- */
+
 public class CityTzHoursTest {
+
+    private long getExpectedTime(String timeZone){
+        TimeZone timezone = TimeZone.getTimeZone(timeZone);
+        Calendar calendar = Calendar.getInstance(timezone);
+        DateFormat formatter = new SimpleDateFormat("HH");
+        formatter.setCalendar(calendar);
+        formatter.setTimeZone(timezone);
+        String s = formatter.format(calendar.getTime());
+        return Long.valueOf(s);
+    }
+
     @Test
-    public void testA(){
+    public void passingEmptyParam(){
         CityTZ cityTZ = new CityTZ("", "");
-        long result = cityTZ.getCurrentHours();
+        long result = Long.valueOf(cityTZ.getTime("HH"));
 
-        TimeZone timezone = TimeZone.getTimeZone("");
-        Calendar calendar = Calendar.getInstance(timezone);
-        DateFormat formatter = new SimpleDateFormat("HH");
-        formatter.setCalendar(calendar);
-        formatter.setTimeZone(timezone);
-        String s = formatter.format(calendar.getTime());
-        long expect = Long.valueOf(s.substring(0, 2));
+        long expect = getExpectedTime("");
 
         assertEquals(expect, result);
     }
 
     @Test
-    public void testB(){
+    public void passingCity(){
         CityTZ cityTZ = new CityTZ("Tbilisi", "");
-        long result = cityTZ.getCurrentHours();
+        long result = Long.valueOf(cityTZ.getTime("HH"));
 
-        TimeZone timezone = TimeZone.getTimeZone("Asia/Tbilisi");
-        Calendar calendar = Calendar.getInstance(timezone);
-        DateFormat formatter = new SimpleDateFormat("HH");
-        formatter.setCalendar(calendar);
-        formatter.setTimeZone(timezone);
-        String s = formatter.format(calendar.getTime());
-        long expect = Long.valueOf(s.substring(0, 2));
+        long expect = getExpectedTime("Asia/Tbilisi");
 
         assertEquals(expect, result);
     }
 
     @Test
-    public void testC(){
+    public void passingTZ(){
         CityTZ cityTZ = new CityTZ("", "Europe/Kiev");
-        long result = cityTZ.getCurrentHours();
+        long result = Long.valueOf(cityTZ.getTime("HH"));
 
-        TimeZone timezone = TimeZone.getTimeZone("Europe/Kiev");
-        Calendar calendar = Calendar.getInstance(timezone);
-        DateFormat formatter = new SimpleDateFormat("HH");
-        formatter.setCalendar(calendar);
-        formatter.setTimeZone(timezone);
-        String s = formatter.format(calendar.getTime());
-        long expect = Long.valueOf(s.substring(0, 2));
+        long expect = getExpectedTime("Europe/Kiev");
 
         assertEquals(expect, result);
     }
 
     @Test
-    public void testD(){
-        CityTZ cityTZ = new CityTZ("New York", " America/New_York");
-        long result = cityTZ.getCurrentHours();
+    public void passingAllParam(){
+        CityTZ cityTZ = new CityTZ("New York", "America/New_York");
+        long result = Long.valueOf(cityTZ.getTime("HH"));
 
-        TimeZone timezone = TimeZone.getTimeZone(" America/New_York");
-        Calendar calendar = Calendar.getInstance(timezone);
-        DateFormat formatter = new SimpleDateFormat("HH");
-        formatter.setCalendar(calendar);
-        formatter.setTimeZone(timezone);
-        String s = formatter.format(calendar.getTime());
-        long expect = Long.valueOf(s.substring(0, 2));
+        long expect = getExpectedTime("America/New_York");
 
         assertEquals(expect, result);
     }
 
-    //если город и часовой пояс не указаны, то выведет GMT+0
     @Test
-    public void testE(){
+    public void passingNullParam(){
         CityTZ cityTZ = new CityTZ(null, null);
-        long result = cityTZ.getCurrentHours();
+        long result = Long.valueOf(cityTZ.getTime("HH"));
 
-        TimeZone timezone = TimeZone.getTimeZone("");
-        Calendar calendar = Calendar.getInstance(timezone);
-        DateFormat formatter = new SimpleDateFormat("HH");
-        formatter.setCalendar(calendar);
-        formatter.setTimeZone(timezone);
-        String s = formatter.format(calendar.getTime());
-        long expect = Long.valueOf(s.substring(0, 2));
+        long expect = getExpectedTime("");
 
         assertEquals(expect, result);
     }
